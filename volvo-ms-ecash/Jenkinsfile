@@ -1,0 +1,149 @@
+def LABEL_ID = 'volvo-ms-ecash'
+def BRANCH_CURRENT_NAME = env.BRANCH_NAME
+def DEV_SERVER_IP = '10.2.0.138'
+def DOCKER_REPOSITORY_PORT = 9001
+def STACK_NAME = 'volvo-ms'
+def SERVICE_NAME = 'ecash'
+def VERSION = env.BUILD_NUMBER
+
+pipeline {
+
+  agent any
+
+  tools {
+    dockerTool 'docker'
+  }
+
+  stages {
+    stage('Checkout') {
+      steps {
+        echo "Usuario logado"
+        sh "whoami"
+        echo 'Checkout...'  
+        echo BRANCH_CURRENT_NAME
+		    checkout([
+		        $class: 'GitSCM', 
+		        branches: [[name: "*/${BRANCH_CURRENT_NAME}"]], 
+		        doGenerateSubmoduleConfigurations: false, 
+		        extensions: [], 
+		        submoduleCfg: [], 
+		        userRemoteConfigs: [[
+		            credentialsId: 'git-id', 
+		            url: "https://git.brq.com/volvo/mdc/microservices/volvo-ms-ecash.git"
+		    ]]])
+		    echo 'Checkout realizado com sucesso'
+		    sh "ls -la"
+      }
+    }
+
+    //stage('Sonarqube') {
+      /*environment {
+          scannerHome = tool 'SonarQubeScanner'
+      }
+      steps {
+        withSonarQubeEnv('sonarqube') {
+          sh "${scannerHome}/bin/sonar-scanner"
+        }
+         timeout(time: 10, unit: 'MINUTES') {
+          waitForQualityGate abortPipeline: true
+        }
+      }*/
+    //}
+
+    stage('Install') {
+      parallel {
+        stage('Static code install') {
+          steps { sh 'echo static code install' }
+        }
+        stage('Install') {
+          steps { sh 'echo install' }
+        }
+      }
+    }
+
+    stage('Test') {
+      parallel {
+        stage('Static code analysis') {
+          steps { sh 'echo static code analysis' }
+        }
+        stage('Unit tests') {
+          steps { sh 'echo unit tests' }
+        }
+      }
+    }
+
+    stage('Build') {
+      when {
+        anyOf {
+          branch 'develop';
+          branch 'qa';
+          //branch 'master';
+        }
+      }
+      steps {
+
+        script {
+          if ("${BRANCH_CURRENT_NAME}" == "develop") {
+            sh "docker build -f DockerfileDev -t ${DEV_SERVER_IP}:${DOCKER_REPOSITORY_PORT}/${LABEL_ID}-dev:${VERSION} . "
+          }
+
+          if ("${BRANCH_CURRENT_NAME}" == "qa") {
+              
+            sh "docker build -f DockerfileQa -t ${DEV_SERVER_IP}:${DOCKER_REPOSITORY_PORT}/${LABEL_ID}-qa:${VERSION} . "
+          }
+          
+        }
+        
+      }
+    }
+
+    stage('Package') {
+      when {
+        anyOf {
+          branch 'develop';
+          branch 'qa';
+          //branch 'master';
+        }
+      }
+      steps { 
+        echo 'Pushing to nexus docker registry...'
+        //sh "docker login 10.2.0.138:9001 --username brq-docker --password volvobrq1"
+        script {
+          if ("${BRANCH_CURRENT_NAME}" == "develop") {
+            //sh "docker push ${DEV_SERVER_IP}:${DOCKER_REPOSITORY_PORT}/${LABEL_ID}-dev:${VERSION}"
+             echo 'publish DEV'
+          }
+          if ("${BRANCH_CURRENT_NAME}" == "qa") {
+            //sh "docker push ${DEV_SERVER_IP}:${DOCKER_REPOSITORY_PORT}/${LABEL_ID}-qa:${VERSION}"
+            echo 'publish QA'
+          }
+        }       
+       }
+    }
+
+    stage('Deploy') {
+      when {
+        anyOf {
+          branch 'develop';
+          branch 'qa';
+          //branch 'master';
+        }
+      }
+      steps {
+         echo 'Deploy...'
+
+         script {
+            if ("${BRANCH_CURRENT_NAME}" == "develop") {
+              sh "docker service update --image ${DEV_SERVER_IP}:${DOCKER_REPOSITORY_PORT}/${LABEL_ID}-dev:${VERSION} --detach --force ${STACK_NAME}_${SERVICE_NAME}-dev"
+            } 
+
+            if ("${BRANCH_CURRENT_NAME}" == "qa") {
+                sh "docker service update --image ${DEV_SERVER_IP}:${DOCKER_REPOSITORY_PORT}/${LABEL_ID}-qa:${VERSION} --detach --force ${STACK_NAME}_${SERVICE_NAME}-qa"
+            }          
+
+         }
+         
+      }
+    }
+  }
+}

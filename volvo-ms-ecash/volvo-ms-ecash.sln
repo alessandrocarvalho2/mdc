@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31019.35
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volvo.Ecash.Api", "Volvo.Ecash.Api\Volvo.Ecash.Api.csproj", "{973D74CF-4B59-4474-B429-0CCD4A3B29B0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volvo.Ecash.Application", "Volvo.Ecash.Application\Volvo.Ecash.Application.csproj", "{4BB3633A-EEE3-45C2-8254-B97016A740BC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volvo.Ecash.Dto", "Volvo.Ecash.Dto\Volvo.Ecash.Dto.csproj", "{12D8819D-9E69-434D-AE37-70E8C83B6849}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Volvo.Ecash.Infrastructure", "Volvo.Ecash.Infrastructure\Volvo.Ecash.Infrastructure.csproj", "{3A9E7305-A5E1-4504-BD4B-F2F8B6AC37B6}"
+EndProject
+#Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Volvo.Ecash.Database", "Volvo.Ecash.Database\Volvo.Ecash.Database.sqlproj", "{0F1B5479-0D29-46D8-B9FF-87930D421E20}"
+#EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{973D74CF-4B59-4474-B429-0CCD4A3B29B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{973D74CF-4B59-4474-B429-0CCD4A3B29B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{973D74CF-4B59-4474-B429-0CCD4A3B29B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{973D74CF-4B59-4474-B429-0CCD4A3B29B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BB3633A-EEE3-45C2-8254-B97016A740BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BB3633A-EEE3-45C2-8254-B97016A740BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BB3633A-EEE3-45C2-8254-B97016A740BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BB3633A-EEE3-45C2-8254-B97016A740BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12D8819D-9E69-434D-AE37-70E8C83B6849}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12D8819D-9E69-434D-AE37-70E8C83B6849}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12D8819D-9E69-434D-AE37-70E8C83B6849}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12D8819D-9E69-434D-AE37-70E8C83B6849}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A9E7305-A5E1-4504-BD4B-F2F8B6AC37B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A9E7305-A5E1-4504-BD4B-F2F8B6AC37B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A9E7305-A5E1-4504-BD4B-F2F8B6AC37B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A9E7305-A5E1-4504-BD4B-F2F8B6AC37B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F1B5479-0D29-46D8-B9FF-87930D421E20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F1B5479-0D29-46D8-B9FF-87930D421E20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F1B5479-0D29-46D8-B9FF-87930D421E20}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{0F1B5479-0D29-46D8-B9FF-87930D421E20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F1B5479-0D29-46D8-B9FF-87930D421E20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F1B5479-0D29-46D8-B9FF-87930D421E20}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AB93B2CC-9538-411F-AAB4-F9D112B560BE}
+	EndGlobalSection
+EndGlobal

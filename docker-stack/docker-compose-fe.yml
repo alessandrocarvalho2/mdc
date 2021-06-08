@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+  frontend-qa:
+    image: 10.2.0.138:9001/volvo-web-qa:latest
+    volumes: 
+      - "/etc/ca-certificates/brq.com2020.sectigo-comodo.pem:/etc/nginx/ssl/brq.com2020.sectigo-comodo.pem"
+    ports:
+      - "80:80"
+      - "443:443"
+  frontend-qa-node:
+    image: 10.2.0.138:9001/volvo-web-node-qa:latest
+    ports:
+      - "3000:3000"
+  frontend-dev:
+    image: 10.2.0.138:9001/volvo-web-dev:latest
+    ports:
+      - "8040:80"
+  frontend-dev-node:
+    image: 10.2.0.138:9001/volvo-web-node-dev:latest
+    ports:
+      - "3008:3000"

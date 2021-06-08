@@ -1,0 +1,20 @@
+FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+WORKDIR /
+COPY ["Volvo.Ecash.Api/Volvo.Ecash.Api.csproj", "Volvo.Ecash.Api/"]
+RUN dotnet restore "Volvo.Ecash.Api/Volvo.Ecash.Api.csproj"
+COPY . .
+WORKDIR "Volvo.Ecash.Api"
+RUN dotnet build "Volvo.Ecash.Api.csproj" -p:PublishProfile=development -c Release -o /app
+
+FROM build AS publish
+RUN dotnet publish "Volvo.Ecash.Api.csproj" -p:PublishProfile=development -c Release -o /app
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app .
+ENTRYPOINT ["dotnet", "Volvo.Ecash.Api.dll"]
